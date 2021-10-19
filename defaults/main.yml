@@ -9,6 +9,12 @@ clamav_daemon_configuration_changes:
   - regexp: '^.*LocalSocket .*$'
     line: 'LocalSocket {{ clamav_daemon_localsocket }}'
 
+clamav_freshclam_configuration_changes:
+  - regexp: '^.*db.local.clamav.net$'
+    state: absent
+  - regexp: '^DatabaseMirror .*$'
+    line: 'DatabaseMirror {{ clamav_local_mirror }}'
+
 # clamav_daemon: 'clamav-daemon'
 clamav_daemon_state: started
 clamav_daemon_enabled: true
