@@ -40,6 +40,13 @@
     state: "{{ item.state | default('present') }}"
     mode: 0644
   with_items: "{{ clamav_freshclam_configuration_changes }}"
+  when: clamav_freshclam_configuration_changes is defined
+
+- name: Add private ClamAV mirror
+  lineinfile:
+    path: "{{ clamav_freshclam_config_path }}"
+    line: "PrivateMirror {{ clamav_privatemirror_database }}"
+  when: clamav_privatemirror_database is defined
 
 - name: Ensure ClamAV daemon is running (if configured).
   service:
